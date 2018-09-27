@@ -1,4 +1,4 @@
-/*! cal-heatmap v3.6.2 (Thu Mar 01 2018 18:38:27)
+/*! cal-heatmap v3.6.2 (Thu Sep 27 2018 15:08:27)
  *  ---------------------------------------------
  *  Cal-Heatmap is a javascript module to create calendar heatmap to visualize time series data
  *  https://github.com/wa0x6e/cal-heatmap
@@ -2771,16 +2771,17 @@ CalHeatMap.prototype = {
 		var parent = this;
 		var options = parent.options;
 		var legendWidth = options.displayLegend ? (parent.Legend.getDim("width") + options.legendMargin[1] + options.legendMargin[3]) : 0;
-		var dayLabelWidth = options.dayLabel && options.domain === "month" && options.subDomain === "day" ? 12 : 0;
 		var legendHeight = options.displayLegend ? (parent.Legend.getDim("height") + options.legendMargin[0] + options.legendMargin[2]) : 0;
 
-		var graphWidth = parent.graphDim.width - options.domainGutter - options.cellPadding;
+		var dayLabelWidth = options.dayLabel && options.domain === "month" && options.subDomain === "day" ? 14 : 0;
+
+		var graphWidth = parent.graphDim.width - options.domainGutter - options.cellPadding + dayLabelWidth;
 		var graphHeight = parent.graphDim.height - options.domainGutter - options.cellPadding;
 
 		this.root.transition().duration(options.animationDuration)
 			.attr("width", function() {
 				if (options.legendVerticalPosition === "middle" || options.legendVerticalPosition === "center") {
-					return graphWidth + legendWidth + dayLabelWidth;
+					return graphWidth + legendWidth;
 				}
 				return Math.max(graphWidth, legendWidth);
 			})
