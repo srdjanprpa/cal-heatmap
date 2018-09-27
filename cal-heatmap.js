@@ -2771,6 +2771,7 @@ CalHeatMap.prototype = {
 		var parent = this;
 		var options = parent.options;
 		var legendWidth = options.displayLegend ? (parent.Legend.getDim("width") + options.legendMargin[1] + options.legendMargin[3]) : 0;
+		var dayLabelWidth = options.dayLabel && options.domain === "month" && options.subDomain === "day" ? 12 : 0;
 		var legendHeight = options.displayLegend ? (parent.Legend.getDim("height") + options.legendMargin[0] + options.legendMargin[2]) : 0;
 
 		var graphWidth = parent.graphDim.width - options.domainGutter - options.cellPadding;
@@ -2779,7 +2780,7 @@ CalHeatMap.prototype = {
 		this.root.transition().duration(options.animationDuration)
 			.attr("width", function() {
 				if (options.legendVerticalPosition === "middle" || options.legendVerticalPosition === "center") {
-					return graphWidth + legendWidth;
+					return graphWidth + legendWidth + dayLabelWidth;
 				}
 				return Math.max(graphWidth, legendWidth);
 			})
