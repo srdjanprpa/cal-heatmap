@@ -1,4 +1,4 @@
-/*! cal-heatmap v3.6.2 (Thu Sep 27 2018 16:16:39)
+/*! cal-heatmap v3.6.2 (Mon Oct 15 2018 22:18:04)
  *  ---------------------------------------------
  *  Cal-Heatmap is a javascript module to create calendar heatmap to visualize time series data
  *  https://github.com/wa0x6e/cal-heatmap
@@ -936,27 +936,40 @@ var CalHeatMap = function() {
 
 				if (options.tooltip) {
 					selection.on("mouseover", function(d) {
-						var domainNode = this.parentNode.parentNode;
+						// var domainNode = this.parentNode.parentNode;
 
+						function offset(el) {
+              var rect = $(el).offset(),
+                scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+                scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+              return { top: rect.top - scrollTop, left: rect.left - scrollLeft };
+            }
+
+            var div = $(this.parentNode);
+						var divOffset = offset(div);
+						
 						self.tooltip
 						.html(self.getSubDomainTitle(d))
 						.attr("style", "display: block;")
 						;
 
-						var tooltipPositionX = self.positionSubDomainX(d.t) - self.tooltip[0][0].offsetWidth/2 + options.cellSize/2;
-						var tooltipPositionY = self.positionSubDomainY(d.t) - self.tooltip[0][0].offsetHeight - options.cellSize/2;
+						// var tooltipPositionX = self.positionSubDomainX(d.t) - self.tooltip[0][0].offsetWidth/2 + options.cellSize/2;
+						// var tooltipPositionY = self.positionSubDomainY(d.t) - self.tooltip[0][0].offsetHeight - options.cellSize/2;
 
-						// Offset by the domain position
-						tooltipPositionX += parseInt(domainNode.getAttribute("x"), 10);
-						tooltipPositionY += parseInt(domainNode.getAttribute("y"), 10);
+						// // Offset by the domain position
+						// tooltipPositionX += parseInt(domainNode.getAttribute("x"), 10);
+						// tooltipPositionY += parseInt(domainNode.getAttribute("y"), 10);
 
-						// Offset by the calendar position (when legend is left/top)
-						tooltipPositionX += parseInt(self.root.select(".graph").attr("x"), 10);
-						tooltipPositionY += parseInt(self.root.select(".graph").attr("y"), 10);
+						// // Offset by the calendar position (when legend is left/top)
+						// tooltipPositionX += parseInt(self.root.select(".graph").attr("x"), 10);
+						// tooltipPositionY += parseInt(self.root.select(".graph").attr("y"), 10);
 
-						// Offset by the inside domain position (when label is left/top)
-						tooltipPositionX += parseInt(domainNode.parentNode.getAttribute("x"), 10);
-						tooltipPositionY += parseInt(domainNode.parentNode.getAttribute("y"), 10);
+						// // Offset by the inside domain position (when label is left/top)
+						// tooltipPositionX += parseInt(domainNode.parentNode.getAttribute("x"), 10);
+						// tooltipPositionY += parseInt(domainNode.parentNode.getAttribute("y"), 10);
+
+						var tooltipPositionX = divOffset.left - self.tooltip[0][0].offsetWidth / 2 + options.cellSize / 2;
+						var tooltipPositionY = divOffset.top - self.tooltip[0][0].offsetHeight - options.cellSize / 2;
 
 						self.tooltip.attr("style",
 						"display: block; " +

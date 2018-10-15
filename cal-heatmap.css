@@ -128,7 +128,7 @@ Remove comment to apply this style to date with value equal to 0
 	font-size: 12px;
 	line-height: 1.4;
 	width: 140px;
-	position: absolute;
+	position: fixed;
 	z-index: 99999;
 	text-align: center;
 	border-radius: 2px;
